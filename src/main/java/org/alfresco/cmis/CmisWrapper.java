@@ -109,6 +109,21 @@ public class CmisWrapper extends DSLProtocol<CmisWrapper> implements DSLContentM
             parameter.put(SessionParameter.BINDING_TYPE, BindingType.ATOMPUB.value());
             LOG.info("Using binding type [{}] to [{}] and credentials: {}", BindingType.ATOMPUB.value(), cmisURLPath, userModel.toString());
         }
+            else if (binding.equals(BindingType.WEBSERVICES.value()))
+            {
+                parameter.put(SessionParameter.WEBSERVICES_REPOSITORY_SERVICE, cmisURLPath);
+                parameter.put(SessionParameter.WEBSERVICES_NAVIGATION_SERVICE, cmisURLPath);
+                parameter.put(SessionParameter.WEBSERVICES_OBJECT_SERVICE, cmisURLPath);
+                parameter.put(SessionParameter.WEBSERVICES_VERSIONING_SERVICE, cmisURLPath);
+                parameter.put(SessionParameter.WEBSERVICES_DISCOVERY_SERVICE, cmisURLPath);
+                parameter.put(SessionParameter.WEBSERVICES_MULTIFILING_SERVICE, cmisURLPath);
+                parameter.put(SessionParameter.WEBSERVICES_RELATIONSHIP_SERVICE, cmisURLPath);
+                parameter.put(SessionParameter.WEBSERVICES_ACL_SERVICE, cmisURLPath);
+                parameter.put(SessionParameter.WEBSERVICES_POLICY_SERVICE, cmisURLPath);
+                parameter.put(SessionParameter.BINDING_TYPE, BindingType.WEBSERVICES.value());
+                LOG.info("Using binding type [{}] to [{}] and credentials: {}", BindingType.WEBSERVICES.value(), cmisURLPath, userModel.toString());
+            }
+
         parameter.put(SessionParameter.CONNECT_TIMEOUT, "20000");
         parameter.put(SessionParameter.READ_TIMEOUT, "60000");
         List<Repository> repositories = factory.getRepositories(parameter);
