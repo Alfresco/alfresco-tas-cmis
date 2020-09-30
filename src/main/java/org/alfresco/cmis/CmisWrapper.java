@@ -1,15 +1,5 @@
 package org.alfresco.cmis;
 
-import static org.alfresco.utility.Utility.checkObjectIsInitialized;
-import static org.alfresco.utility.report.log.Step.STEP;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-
 import org.alfresco.cmis.dsl.BaseObjectType;
 import org.alfresco.cmis.dsl.CheckIn;
 import org.alfresco.cmis.dsl.CmisAssertion;
@@ -62,6 +52,16 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+
+import static org.alfresco.utility.Utility.checkObjectIsInitialized;
+import static org.alfresco.utility.report.log.Step.STEP;
 
 @Service
 @Scope(value = "prototype")
