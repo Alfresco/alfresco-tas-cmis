@@ -278,20 +278,6 @@ public class CmisUtil
         return newFolder;
     }
 
-    protected boolean isPrivateWorkingCopy()
-    {
-        boolean result = false;
-        try
-        {
-            result = getPWCDocument().isPrivateWorkingCopy();
-        }
-        catch (CmisVersioningException cmisVersioningException)
-        {
-            result = false;
-        }
-        return result;
-    }
-
     protected boolean isVersionSeriesPrivateWorkingCopy()
     {
         boolean result;

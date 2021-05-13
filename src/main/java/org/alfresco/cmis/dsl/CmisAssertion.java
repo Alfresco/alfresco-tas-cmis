@@ -315,18 +315,20 @@ public class CmisAssertion extends DSLAssertion<CmisWrapper>
     {
         Document document = cmisAPI().withCMISUtil().getCmisDocument(cmisAPI().getLastResource());
         STEP(String.format("%s Verify if document '%s' is private working copy", CmisWrapper.STEP_PREFIX, document.getName()));
-        if (BindingType.WEBSERVICES.equals(cmisAPI().getSession().getBinding().getBindingType()))
-        {
-            // Alfresco supports BindingType.WEBSERVICES for CMIS 1.0 and
-            // "cmis:isPrivateWorkingCopy" was introduced with CMIS 1.1
-            // thus checking if the document is a pwc through CMIS 1.0 method
-            // https://chemistry.apache.org/java/javadoc/org/apache/chemistry/opencmis/client/api/Document.html#isVersionSeriesPrivateWorkingCopy--
-            Assert.assertTrue(cmisAPI().withCMISUtil().isVersionSeriesPrivateWorkingCopy());
-        }
-        else
-        {
-            Assert.assertTrue(cmisAPI().withCMISUtil().isPrivateWorkingCopy());
-        }
+
+        // Alfresco supports BindingType.WEBSERVICES for CMIS 1.0
+        // (BindingType.ATOMPUB and BindingType.BROWSER for CMIS 1.1)
+        // and "cmis:isPrivateWorkingCopy" was introduced with CMIS 1.1.
+        //
+        // Checking if the document is a pwc through
+        // https://chemistry.apache.org/java/javadoc/org/apache/chemistry/opencmis/client/api/DocumentProperties.html#isPrivateWorkingCopy--
+        // won't work for BindingType.WEBSERVICES
+        //
+        // Thus using
+        // https://chemistry.apache.org/java/javadoc/org/apache/chemistry/opencmis/client/api/Document.html#isVersionSeriesPrivateWorkingCopy--
+        // which is supported in all CMIS versions.
+        Assert.assertTrue(cmisAPI().withCMISUtil().isVersionSeriesPrivateWorkingCopy());
+
         return cmisAPI();
     }
 
@@ -339,7 +341,7 @@ public class CmisAssertion extends DSLAssertion<CmisWrapper>
     {
         Document document = cmisAPI().withCMISUtil().getCmisDocument(cmisAPI().getLastResource());
         STEP(String.format("%s Verify if document '%s' PWC is not private working copy", CmisWrapper.STEP_PREFIX, document.getName()));
-        Assert.assertFalse(cmisAPI().withCMISUtil().isPrivateWorkingCopy());
+        Assert.assertFalse(cmisAPI().withCMISUtil().isVersionSeriesPrivateWorkingCopy());
         return cmisAPI();
     }
 
