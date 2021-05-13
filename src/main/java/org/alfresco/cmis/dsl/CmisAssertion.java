@@ -37,6 +37,7 @@ import org.apache.chemistry.opencmis.commons.data.Ace;
 import org.apache.chemistry.opencmis.commons.data.Acl;
 import org.apache.chemistry.opencmis.commons.data.CmisExtensionElement;
 import org.apache.chemistry.opencmis.commons.enums.Action;
+import org.apache.chemistry.opencmis.commons.enums.BindingType;
 import org.apache.chemistry.opencmis.commons.enums.ChangeType;
 import org.apache.chemistry.opencmis.commons.enums.ExtensionLevel;
 import org.apache.chemistry.opencmis.commons.enums.IncludeRelationships;
@@ -314,7 +315,18 @@ public class CmisAssertion extends DSLAssertion<CmisWrapper>
     {
         Document document = cmisAPI().withCMISUtil().getCmisDocument(cmisAPI().getLastResource());
         STEP(String.format("%s Verify if document '%s' is private working copy", CmisWrapper.STEP_PREFIX, document.getName()));
-        Assert.assertTrue(cmisAPI().withCMISUtil().isPrivateWorkingCopy());
+        if (BindingType.WEBSERVICES.equals(cmisAPI().getSession().getBinding().getBindingType()))
+        {
+            // Alfresco supports BindingType.WEBSERVICES for CMIS 1.0 and
+            // "cmis:isPrivateWorkingCopy" was introduced with CMIS 1.1
+            // thus checking if the document is a pwc through CMIS 1.0 method
+            // https://chemistry.apache.org/java/javadoc/org/apache/chemistry/opencmis/client/api/Document.html#isVersionSeriesPrivateWorkingCopy--
+            Assert.assertTrue(cmisAPI().withCMISUtil().isVersionSeriesPrivateWorkingCopy());
+        }
+        else
+        {
+            Assert.assertTrue(cmisAPI().withCMISUtil().isPrivateWorkingCopy());
+        }
         return cmisAPI();
     }
 

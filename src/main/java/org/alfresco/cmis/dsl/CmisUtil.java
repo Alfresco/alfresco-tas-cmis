@@ -292,6 +292,20 @@ public class CmisUtil
         return result;
     }
 
+    protected boolean isVersionSeriesPrivateWorkingCopy()
+    {
+        boolean result;
+        try
+        {
+            result = getPWCDocument().isVersionSeriesPrivateWorkingCopy();
+        }
+        catch (CmisVersioningException cmisVersioningException)
+        {
+            result = false;
+        }
+        return result;
+    }
+
     /**
      * Returns the PWC (private working copy) ID of the document version series
      */
