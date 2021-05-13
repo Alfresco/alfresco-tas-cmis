@@ -327,7 +327,7 @@ public class CmisAssertion extends DSLAssertion<CmisWrapper>
         // Thus using
         // https://chemistry.apache.org/java/javadoc/org/apache/chemistry/opencmis/client/api/Document.html#isVersionSeriesPrivateWorkingCopy--
         // which is supported in all CMIS versions.
-        Assert.assertTrue(cmisAPI().withCMISUtil().isVersionSeriesPrivateWorkingCopy());
+        Assert.assertTrue(cmisAPI().withCMISUtil().isPrivateWorkingCopy());
 
         return cmisAPI();
     }
@@ -341,7 +341,7 @@ public class CmisAssertion extends DSLAssertion<CmisWrapper>
     {
         Document document = cmisAPI().withCMISUtil().getCmisDocument(cmisAPI().getLastResource());
         STEP(String.format("%s Verify if document '%s' PWC is not private working copy", CmisWrapper.STEP_PREFIX, document.getName()));
-        Assert.assertFalse(cmisAPI().withCMISUtil().isVersionSeriesPrivateWorkingCopy());
+        Assert.assertFalse(cmisAPI().withCMISUtil().isPrivateWorkingCopy());
         return cmisAPI();
     }
 

@@ -278,7 +278,7 @@ public class CmisUtil
         return newFolder;
     }
 
-    protected boolean isVersionSeriesPrivateWorkingCopy()
+    protected boolean isPrivateWorkingCopy()
     {
         boolean result;
         try
